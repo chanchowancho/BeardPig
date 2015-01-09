@@ -9,6 +9,12 @@
     "resources": {
         "media": [
             {
+                "file": "images/screenshot.png",
+                "menuIcon": true,
+                "name": "screenshot",
+                "type": "png"
+            },
+            {
                 "file": "images/Both Hands Up.png",
                 "name": "BACKGROUND_BOTH_UP",
                 "type": "png"

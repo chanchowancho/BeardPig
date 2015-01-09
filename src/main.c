@@ -41,6 +41,8 @@ static void main_window_load(Window *window) {
   s_background_layer = bitmap_layer_create(GRect(0, 0, 144, 168));
   bitmap_layer_set_bitmap(s_background_layer, s_background_bitmap);
   bitmap_layer_set_bitmap(s_day_layer, s_friday);
+  
+ 
   layer_add_child(window_get_root_layer(window), bitmap_layer_get_layer(s_background_layer));
   layer_add_child(window_get_root_layer(window), bitmap_layer_get_layer(s_day_layer));
   
@@ -62,25 +64,25 @@ static void main_window_load(Window *window) {
 static void update_date(int input){
   switch(input){
     case 0:
-    bitmap_layer_set_bitmap(s_day_layer,s_sunday);
+    //bitmap_layer_set_bitmap(s_day_layer,s_sunday);
     break;
     case 1:
-    bitmap_layer_set_bitmap(s_day_layer,s_monday);
+    //bitmap_layer_set_bitmap(s_day_layer,s_monday);
     break;
     case 2:
-    bitmap_layer_set_bitmap(s_day_layer,s_tuesday);
+    //bitmap_layer_set_bitmap(s_day_layer,s_tuesday);
     break;
     case 3:
-    bitmap_layer_set_bitmap(s_day_layer,s_wednesday);
+    //bitmap_layer_set_bitmap(s_day_layer,s_wednesday);
     break;
     case 4:
-    bitmap_layer_set_bitmap(s_day_layer,s_thursday);
+    //bitmap_layer_set_bitmap(s_day_layer,s_thursday);
     break;
     case 5:
     bitmap_layer_set_bitmap(s_day_layer,s_friday);
     break;
     case 6:
-    bitmap_layer_set_bitmap(s_day_layer,s_saturday);
+    //bitmap_layer_set_bitmap(s_day_layer,s_saturday);
     break;
   }
 }
