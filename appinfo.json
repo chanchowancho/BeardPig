@@ -9,13 +9,13 @@
     "resources": {
         "media": [
             {
-                "file": "images/Watch Prototype Both Hand Down.png",
-                "name": "BACKGROUND_BOTH_DOWN",
+                "file": "images/Both Hands Up.png",
+                "name": "BACKGROUND_BOTH_UP",
                 "type": "png"
             },
             {
-                "file": "images/Watch Prototype Both Hand Up.png",
-                "name": "BACKGROUND_BOTH_UP",
+                "file": "images/Both Hands Down.png",
+                "name": "BACKGROUND_BOTH_DOWN",
                 "type": "png"
             },
             {

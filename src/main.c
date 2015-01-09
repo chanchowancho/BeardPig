@@ -18,13 +18,10 @@ static GBitmap *s_wednesday;
 static GBitmap *s_thursday;
 static GBitmap *s_friday;
 static GBitmap *s_saturday;
-static int counter;
-static int minutes;
   
 static void main_window_load(Window *window) {
   // Create GBitmap, then set to created BitmapLayer
-  counter = 0;
-  minutes = 0;
+
   s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BACKGROUND);
   s_background_bitmap_two = gbitmap_create_with_resource(RESOURCE_ID_BACKGROUND2);
   s_background_bitmap_up = gbitmap_create_with_resource(RESOURCE_ID_BACKGROUND_UP);
@@ -43,7 +40,7 @@ static void main_window_load(Window *window) {
   s_day_layer = bitmap_layer_create(GRect(0, 140, 144, 28));
   s_background_layer = bitmap_layer_create(GRect(0, 0, 144, 168));
   bitmap_layer_set_bitmap(s_background_layer, s_background_bitmap);
-  bitmap_layer_set_bitmap(s_day_layer, s_monday);
+  bitmap_layer_set_bitmap(s_day_layer, s_friday);
   layer_add_child(window_get_root_layer(window), bitmap_layer_get_layer(s_background_layer));
   layer_add_child(window_get_root_layer(window), bitmap_layer_get_layer(s_day_layer));
   
@@ -88,20 +85,53 @@ static void update_date(int input){
   }
 }
 
+static void update_background(int counter,int minutesCounter){
+  if (counter % 2 == 0){
+    if ((counter == 56 && minutesCounter == 59) || (counter == 58 && minutesCounter == 59)){
+      bitmap_layer_set_bitmap(s_background_layer, s_background_bitmap_both_up);
+    } else if (counter == 56 || counter == 58) {
+      bitmap_layer_set_bitmap(s_background_layer, s_background_bitmap_up);
+    } else {
+      bitmap_layer_set_bitmap(s_background_layer, s_background_bitmap_two);
+    } 
+  } else {
+    if (counter == 57 && minutesCounter == 59){
+      bitmap_layer_set_bitmap(s_background_layer, s_background_bitmap_both_down);
+    } else if (counter == 57 ) {
+      bitmap_layer_set_bitmap(s_background_layer, s_background_bitmap_down);
+    } else {
+      bitmap_layer_set_bitmap(s_background_layer, s_background_bitmap);
+    }
+  }
+  
+}
+
 static void update_time() {
   // Get a tm structure
   time_t temp = time(NULL); 
   struct tm *tick_time = localtime(&temp);
+  
   static char daystring[] = "1";
   strftime(daystring, sizeof("1"), "%w", tick_time);
   int weekdayNum = atoi(daystring);
   update_date(weekdayNum);
+  
+  static char secondString[] = "11";
+  strftime(secondString, sizeof("11"), "%S", tick_time);
+  int counter = atoi(secondString);
+  
+  static char minutesString[] = "22";
+  strftime(minutesString, sizeof("22"), "%M", tick_time);
+  int minuteCounter = atoi(minutesString);
+  
+  update_background(counter,minuteCounter);
+
 
   
   // Create a long-lived buffer
   static char buffer[] = "00  00";
 
-  // Write the current hours and minutes into the buffer
+  // Write the current hours and into the buffer
   if(clock_is_24h_style() == true) {
     // Use 24 hour format
     strftime(buffer, sizeof("00  00"), "%H  %M", tick_time);
@@ -112,49 +142,6 @@ static void update_time() {
 
   // Display this time on the TextLayer
   text_layer_set_text(s_time_layer, buffer);
-}
-
-  //THis method updates the counter with the current second.
-static void update_counter(){
-  time_t temp = time(NULL); 
-  struct tm *tick_time = localtime(&temp);
-  static char secondString[] = "12";
-  strftime(secondString, sizeof("12"), "%S", tick_time);
-  counter = atoi(secondString);
-}
-
-static void update_minutes(){
-  time_t temp = time(NULL); 
-  struct tm *tick_time = localtime(&temp);
-  static char minuteString[] = "12";
-  strftime(minuteString, sizeof("12"), "%M", tick_time);
-  minutes = atoi(minuteString);
-}
-
-static void update_background(){
-  if (counter % 2 == 0){
-    if (counter == 56 || counter == 58){
-      if (minutes == 59){
-        bitmap_layer_set_bitmap(s_background_layer, s_background_bitmap_both_up);
-      } else {
-        bitmap_layer_set_bitmap(s_background_layer, s_background_bitmap_up);
-      }
-    } else {
-    bitmap_layer_set_bitmap(s_background_layer, s_background_bitmap_two);
-    }
-      
-  } else {
-    if (counter == 57){
-      if (minutes == 59){
-        bitmap_layer_set_bitmap(s_background_layer, s_background_bitmap_both_down);
-      } else {
-        bitmap_layer_set_bitmap(s_background_layer, s_background_bitmap_down);
-      }
-    } else {
-    bitmap_layer_set_bitmap(s_background_layer, s_background_bitmap);
-    }
-  }
-  
 }
 
 
@@ -176,7 +163,7 @@ static void main_window_unload(Window *window) {
   bitmap_layer_destroy(s_background_layer);
   bitmap_layer_destroy(s_day_layer);
   text_layer_destroy(s_time_layer);
-  window_destroy(s_main_window);
+  //window_destroy(s_main_window);
   
   
   
@@ -185,9 +172,7 @@ static void main_window_unload(Window *window) {
 
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
   update_time();
-  update_counter();
-  update_minutes();
-  update_background();
+  
 }
 
   
@@ -205,6 +190,7 @@ static void init() {
   // Show the Window on the watch, with animated=true
   window_stack_push(s_main_window, true);
   update_time();
+
   // Register with TickTimerService
   tick_timer_service_subscribe(SECOND_UNIT, tick_handler);
 }
