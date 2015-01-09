@@ -1,0 +1,85 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "victor.jones@gmail.com",
+    "longName": "Mr Beard & Mr Pig",
+    "projectType": "native",
+    "resources": {
+        "media": [
+            {
+                "file": "images/Watch Prototype Both Hand Down.png",
+                "name": "BACKGROUND_BOTH_DOWN",
+                "type": "png"
+            },
+            {
+                "file": "images/Watch Prototype Both Hand Up.png",
+                "name": "BACKGROUND_BOTH_UP",
+                "type": "png"
+            },
+            {
+                "file": "images/Watch Prototype Hand Down.png",
+                "name": "BACKGROUND_DOWN",
+                "type": "png"
+            },
+            {
+                "file": "images/Watch Prototype Hand Up.png",
+                "name": "BACKGROUND_UP",
+                "type": "png"
+            },
+            {
+                "file": "images/Watch Prototype 2.png",
+                "name": "BACKGROUND2",
+                "type": "png"
+            },
+            {
+                "file": "images/Watch Prototype.png",
+                "name": "BACKGROUND",
+                "type": "png"
+            },
+            {
+                "file": "images/wednesday.png",
+                "name": "WEDNESDAY",
+                "type": "png"
+            },
+            {
+                "file": "images/saturday.png",
+                "name": "SATURDAY",
+                "type": "png"
+            },
+            {
+                "file": "images/sunday.png",
+                "name": "SUNDAY",
+                "type": "png"
+            },
+            {
+                "file": "images/tuesday.png",
+                "name": "TUESDAY",
+                "type": "png"
+            },
+            {
+                "file": "images/friday.png",
+                "name": "FRIDAY",
+                "type": "png"
+            },
+            {
+                "file": "images/thursday.png",
+                "name": "THURSDAY",
+                "type": "png"
+            },
+            {
+                "file": "images/monday.png",
+                "name": "MONDAY",
+                "type": "png"
+            }
+        ]
+    },
+    "shortName": "BeardPig",
+    "uuid": "77b807e6-1beb-4107-87c1-4f65a6db9d10",
+    "versionCode": 1,
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": true
+    }
+}
