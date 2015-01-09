@@ -21,7 +21,6 @@ static GBitmap *s_saturday;
   
 static void main_window_load(Window *window) {
   // Create GBitmap, then set to created BitmapLayer
-
   s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BACKGROUND);
   s_background_bitmap_two = gbitmap_create_with_resource(RESOURCE_ID_BACKGROUND2);
   s_background_bitmap_up = gbitmap_create_with_resource(RESOURCE_ID_BACKGROUND_UP);
@@ -29,13 +28,13 @@ static void main_window_load(Window *window) {
   s_background_bitmap_both_up = gbitmap_create_with_resource(RESOURCE_ID_BACKGROUND_BOTH_UP);
   s_background_bitmap_both_down = gbitmap_create_with_resource(RESOURCE_ID_BACKGROUND_BOTH_DOWN);
   
-  s_sunday = gbitmap_create_with_resource(RESOURCE_ID_SUNDAY);
   s_monday = gbitmap_create_with_resource(RESOURCE_ID_MONDAY);
   s_tuesday = gbitmap_create_with_resource(RESOURCE_ID_TUESDAY);
   s_wednesday = gbitmap_create_with_resource(RESOURCE_ID_WEDNESDAY);
   s_thursday = gbitmap_create_with_resource(RESOURCE_ID_THURSDAY);
   s_friday = gbitmap_create_with_resource(RESOURCE_ID_FRIDAY);
   s_saturday = gbitmap_create_with_resource(RESOURCE_ID_SATURDAY);
+  s_sunday = gbitmap_create_with_resource(RESOURCE_ID_SUNDAY);
   
   s_day_layer = bitmap_layer_create(GRect(0, 140, 144, 28));
   s_background_layer = bitmap_layer_create(GRect(0, 0, 144, 168));
@@ -59,30 +58,31 @@ static void main_window_load(Window *window) {
   // Add it as a child layer to the Window's root layer
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_time_layer));
   
+  
 }
 
 static void update_date(int input){
   switch(input){
     case 0:
-    //bitmap_layer_set_bitmap(s_day_layer,s_sunday);
+    bitmap_layer_set_bitmap(s_day_layer,s_sunday);
     break;
     case 1:
-    //bitmap_layer_set_bitmap(s_day_layer,s_monday);
+    bitmap_layer_set_bitmap(s_day_layer,s_monday);
     break;
     case 2:
-    //bitmap_layer_set_bitmap(s_day_layer,s_tuesday);
+    bitmap_layer_set_bitmap(s_day_layer,s_tuesday);
     break;
     case 3:
-    //bitmap_layer_set_bitmap(s_day_layer,s_wednesday);
+    bitmap_layer_set_bitmap(s_day_layer,s_wednesday);
     break;
     case 4:
-    //bitmap_layer_set_bitmap(s_day_layer,s_thursday);
+    bitmap_layer_set_bitmap(s_day_layer,s_thursday);
     break;
     case 5:
     bitmap_layer_set_bitmap(s_day_layer,s_friday);
     break;
     case 6:
-    //bitmap_layer_set_bitmap(s_day_layer,s_saturday);
+    bitmap_layer_set_bitmap(s_day_layer,s_saturday);
     break;
   }
 }
@@ -113,11 +113,6 @@ static void update_time() {
   time_t temp = time(NULL); 
   struct tm *tick_time = localtime(&temp);
   
-  static char daystring[] = "1";
-  strftime(daystring, sizeof("1"), "%w", tick_time);
-  int weekdayNum = atoi(daystring);
-  update_date(weekdayNum);
-  
   static char secondString[] = "11";
   strftime(secondString, sizeof("11"), "%S", tick_time);
   int counter = atoi(secondString);
@@ -127,6 +122,11 @@ static void update_time() {
   int minuteCounter = atoi(minutesString);
   
   update_background(counter,minuteCounter);
+  
+  static char daystring[] = "1";
+  strftime(daystring, sizeof("1"), "%w", tick_time);
+  int weekdayNum = atoi(daystring);
+  update_date(weekdayNum);
 
 
   
@@ -174,7 +174,6 @@ static void main_window_unload(Window *window) {
 
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
   update_time();
-  
 }
 
   
