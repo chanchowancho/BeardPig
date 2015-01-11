@@ -9,6 +9,12 @@
     "resources": {
         "media": [
             {
+                "file": "images/MenuScreen.png",
+                "menuIcon": true,
+                "name": "menuscreen",
+                "type": "png"
+            },
+            {
                 "file": "images/Watch Prototype Both Hand Up.png",
                 "name": "BACKGROUND_BOTH_UP",
                 "type": "png"
@@ -40,7 +46,6 @@
             },
             {
                 "file": "images/screenshot.png",
-                "menuIcon": true,
                 "name": "screenshot",
                 "type": "png"
             },

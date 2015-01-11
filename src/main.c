@@ -2,7 +2,6 @@
 
 static Window *s_main_window;
 static TextLayer *s_time_layer;
-//static TextLayer *s_message_layer;
 static BitmapLayer *s_background_layer;
 static BitmapLayer *s_day_layer;
 static GBitmap *s_background_bitmap;
@@ -11,14 +10,8 @@ static GBitmap *s_background_bitmap_up;
 static GBitmap *s_background_bitmap_down;
 static GBitmap *s_background_bitmap_both_up;
 static GBitmap *s_background_bitmap_both_down;
-static GBitmap *s_sunday;
-static GBitmap *s_monday;
-static GBitmap *s_tuesday;
-static GBitmap *s_wednesday;
-static GBitmap *s_thursday;
-static GBitmap *s_friday;
-static GBitmap *s_saturday;
-  
+static GBitmap *s_day;
+
 static void main_window_load(Window *window) {
   // Create GBitmap, then set to created BitmapLayer
   s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BACKGROUND);
@@ -28,22 +21,19 @@ static void main_window_load(Window *window) {
   s_background_bitmap_both_up = gbitmap_create_with_resource(RESOURCE_ID_BACKGROUND_BOTH_UP);
   s_background_bitmap_both_down = gbitmap_create_with_resource(RESOURCE_ID_BACKGROUND_BOTH_DOWN);
   
-  s_monday = gbitmap_create_with_resource(RESOURCE_ID_MONDAY);
-  s_tuesday = gbitmap_create_with_resource(RESOURCE_ID_TUESDAY);
-  s_wednesday = gbitmap_create_with_resource(RESOURCE_ID_WEDNESDAY);
-  s_thursday = gbitmap_create_with_resource(RESOURCE_ID_THURSDAY);
-  s_friday = gbitmap_create_with_resource(RESOURCE_ID_FRIDAY);
-  s_saturday = gbitmap_create_with_resource(RESOURCE_ID_SATURDAY);
-  s_sunday = gbitmap_create_with_resource(RESOURCE_ID_SUNDAY);
-  
-  s_day_layer = bitmap_layer_create(GRect(0, 140, 144, 28));
+  s_day = gbitmap_create_with_resource(RESOURCE_ID_MONDAY);
+
   s_background_layer = bitmap_layer_create(GRect(0, 0, 144, 168));
   bitmap_layer_set_bitmap(s_background_layer, s_background_bitmap);
-  bitmap_layer_set_bitmap(s_day_layer, s_friday);
-  
- 
   layer_add_child(window_get_root_layer(window), bitmap_layer_get_layer(s_background_layer));
+  
+  s_day_layer = bitmap_layer_create(GRect(0, 140, 144, 28));
+  bitmap_layer_set_bitmap(s_day_layer, s_day);
   layer_add_child(window_get_root_layer(window), bitmap_layer_get_layer(s_day_layer));
+ 
+  
+  
+  
   
   // Create time TextLayer
   s_time_layer = text_layer_create(GRect(0, 8, 144, 50));
@@ -64,25 +54,39 @@ static void main_window_load(Window *window) {
 static void update_date(int input){
   switch(input){
     case 0:
-    bitmap_layer_set_bitmap(s_day_layer,s_sunday);
+    gbitmap_destroy(s_day);
+    s_day = gbitmap_create_with_resource(RESOURCE_ID_SUNDAY);
+    bitmap_layer_set_bitmap(s_day_layer,s_day);
     break;
     case 1:
-    bitmap_layer_set_bitmap(s_day_layer,s_monday);
+    gbitmap_destroy(s_day);
+    s_day = gbitmap_create_with_resource(RESOURCE_ID_MONDAY);
+    bitmap_layer_set_bitmap(s_day_layer,s_day);
     break;
     case 2:
-    bitmap_layer_set_bitmap(s_day_layer,s_tuesday);
+    gbitmap_destroy(s_day);
+    s_day = gbitmap_create_with_resource(RESOURCE_ID_TUESDAY);
+    bitmap_layer_set_bitmap(s_day_layer,s_day);
     break;
     case 3:
-    bitmap_layer_set_bitmap(s_day_layer,s_wednesday);
+    gbitmap_destroy(s_day);
+    s_day = gbitmap_create_with_resource(RESOURCE_ID_WEDNESDAY);
+    bitmap_layer_set_bitmap(s_day_layer,s_day);
     break;
     case 4:
-    bitmap_layer_set_bitmap(s_day_layer,s_thursday);
+    gbitmap_destroy(s_day);
+    s_day = gbitmap_create_with_resource(RESOURCE_ID_THURSDAY);
+    bitmap_layer_set_bitmap(s_day_layer,s_day);
     break;
     case 5:
-    bitmap_layer_set_bitmap(s_day_layer,s_friday);
+    gbitmap_destroy(s_day);
+    s_day = gbitmap_create_with_resource(RESOURCE_ID_FRIDAY);
+    bitmap_layer_set_bitmap(s_day_layer,s_day);
     break;
     case 6:
-    bitmap_layer_set_bitmap(s_day_layer,s_saturday);
+    gbitmap_destroy(s_day);
+    s_day = gbitmap_create_with_resource(RESOURCE_ID_SATURDAY);
+    bitmap_layer_set_bitmap(s_day_layer,s_day);
     break;
   }
 }
@@ -155,13 +159,7 @@ static void main_window_unload(Window *window) {
   gbitmap_destroy(s_background_bitmap_down);
   gbitmap_destroy(s_background_bitmap_both_up);
   gbitmap_destroy(s_background_bitmap_both_down);
-  gbitmap_destroy(s_sunday);
-  gbitmap_destroy(s_monday);
-  gbitmap_destroy(s_tuesday);
-  gbitmap_destroy(s_wednesday);
-  gbitmap_destroy(s_thursday);
-  gbitmap_destroy(s_friday);
-  gbitmap_destroy(s_saturday);
+  gbitmap_destroy(s_day);
   bitmap_layer_destroy(s_background_layer);
   bitmap_layer_destroy(s_day_layer);
   text_layer_destroy(s_time_layer);
@@ -189,6 +187,7 @@ static void init() {
   });
 
   // Show the Window on the watch, with animated=true
+  
   window_stack_push(s_main_window, true);
   update_time();
 
